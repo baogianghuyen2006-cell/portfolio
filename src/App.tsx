@@ -1,6 +1,6 @@
-import { FormEvent, ReactNode, useState } from 'react'
+import { FormEvent, ReactNode } from 'react'
 
-const A = '/assets'
+const A = `${import.meta.env.BASE_URL}assets`
 type IconName = 'home' | 'user' | 'skills' | 'projects' | 'education' | 'contact' | 'arrow' | 'code' | 'mail' | 'phone' | 'pin' | 'github' | 'linkedin' | 'facebook' | 'download'
 
 function Icon({ name, size = 20 }: { name: IconName; size?: number }) {
@@ -50,8 +50,19 @@ function SectionHeading({ kicker, title, description }: { kicker: string; title:
 }
 
 function App() {
-  const [sent, setSent] = useState(false)
-  function submitContact(event: FormEvent<HTMLFormElement>) { event.preventDefault(); setSent(true) }
+  function submitContact(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    const formData = new FormData(event.currentTarget)
+    const subject = `Portfolio: ${String(formData.get('subject'))}`
+    const body = [
+      `Họ tên: ${String(formData.get('name'))}`,
+      `Email: ${String(formData.get('email'))}`,
+      '',
+      String(formData.get('message')),
+    ].join('\n')
+
+    window.location.href = `mailto:bao2006@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+  }
 
   return (
     <div className="site-shell">
@@ -78,7 +89,7 @@ function App() {
         <section className="section about" id="about">
           <SectionHeading kicker="Về bản thân tôi" title="Một lập trình viên trẻ, tư duy sản phẩm" description="Câu chuyện đằng sau những sản phẩm và hành trình tôi đang theo đuổi." />
           <div className="about-grid">
-            <div className="profile-card card"><div className="profile-head"><img src={`${A}/5455c.png`} alt="Nguyễn Sỹ Bảo" /><div><h3>Nguyễn Sỹ Bảo</h3><span>2004 · 22 tuổi</span><p>Công nghệ thông tin · Nghệ An, Việt Nam</p></div></div><div className="profile-meta"><span>Trường ĐH Vinh</span><span>Sinh viên</span></div><a className="button primary full" href="#contact"><Icon name="download" size={17} /> Tải xuống CV (PDF)</a></div>
+            <div className="profile-card card"><div className="profile-head"><img src={`${A}/5455c.png`} alt="Nguyễn Sỹ Bảo" /><div><h3>Nguyễn Sỹ Bảo</h3><span>2004 · 22 tuổi</span><p>Công nghệ thông tin · Nghệ An, Việt Nam</p></div></div><div className="profile-meta"><span>Trường ĐH Vinh</span><span>Sinh viên</span></div><a className="button primary full" href="mailto:bao2006@gmail.com"><Icon name="mail" size={17} /> Liên hệ qua email</a></div>
             <article className="story card"><h3>Giới thiệu về bản thân</h3><p>Có duyên với ngành công nghệ từ những dòng mã Pascal và C++. Những khoảnh khắc dòng code chạy được đã tạo nên niềm đam mê lập trình của mình.</p><p>Ở đại học, ngọn lửa ấy trở thành say mê tạo ra các sản phẩm web và ứng dụng có giá trị thực tiễn. Mình luôn tin rằng một ứng dụng tốt giải quyết đúng vấn đề của người dùng.</p></article>
             <div className="principles card"><h3>Điểm mạnh nổi bật</h3><div><b>Tự học & nghiên cứu tài liệu</b><p>Chủ động cập nhật công nghệ mới.</p></div><div><b>Tư duy logic & thuật toán</b><p>Nền tảng phát triển phần mềm vững chắc.</p></div><div><b>UX/UI & Clean Code</b><p>Tối ưu trải nghiệm và mã nguồn rõ ràng.</p></div></div>
             <div className="goals card"><h3>Mục tiêu nghề nghiệp</h3><div className="timeline-mini"><span>Ngắn hạn</span><b>Software Engineer Intern</b><p>Trở thành kỹ sư phần mềm có tư duy hệ thống.</p></div><div className="timeline-mini"><span>Dài hạn</span><b>Technical Lead</b><p>Dẫn dắt đội kỹ thuật và xây dựng sản phẩm bền vững.</p></div></div>
@@ -92,7 +103,7 @@ function App() {
 
         <section className="section projects-section" id="projects">
           <SectionHeading kicker="Portfolio Highlights" title="Dự án đã thực hiện" description="Các sản phẩm website và ứng dụng được phát triển trong học tập và làm việc nhóm." />
-          <div className="project-grid">{projects.map(project => <article className="project-card card" key={project.title}><div className="project-image"><img src={project.image} alt={`Giao diện ${project.title}`} /><span>{project.eyebrow}</span></div><div className="project-content"><h3>{project.title}</h3><b className="role">{project.role}</b><p>{project.copy}</p><div className="contribution"><b>Đóng góp chính</b><span>{project.contribution}</span></div><div className="tags">{project.tags.map(tag => <span key={tag}>{tag}</span>)}</div><a className="button primary full" href="#contact">Xem chi tiết dự án <Icon name="arrow" size={16} /></a></div></article>)}</div>
+          <div className="project-grid">{projects.map(project => <article className="project-card card" key={project.title}><div className="project-image"><img src={project.image} alt={`Giao diện ${project.title}`} /><span>{project.eyebrow}</span></div><div className="project-content"><h3>{project.title}</h3><b className="role">{project.role}</b><p>{project.copy}</p><div className="contribution"><b>Đóng góp chính</b><span>{project.contribution}</span></div><div className="tags">{project.tags.map(tag => <span key={tag}>{tag}</span>)}</div><a className="button primary full" href="#contact">Trao đổi về dự án <Icon name="arrow" size={16} /></a></div></article>)}</div>
           <div className="collab-banner"><span className="skill-icon"><Icon name="code" /></span><div><b>Bạn có ý tưởng dự án thú vị?</b><p>Hãy cùng nhau hợp tác và hiện thực hóa ý tưởng.</p></div><a className="button primary" href="#contact">Trao đổi ý tưởng</a></div>
         </section>
 
@@ -104,7 +115,7 @@ function App() {
 
         <section className="section contact-section" id="contact">
           <div className="contact-intro"><span className="status"><i />Đang mở cho cơ hội mới</span><h2>Hãy kết nối với tôi</h2><p>Tôi luôn sẵn sàng trao đổi về cơ hội thực tập, công việc hoặc dự án công nghệ.</p><div className="contact-details"><a href="mailto:bao2006@gmail.com"><span><Icon name="mail" /></span><small>Email cá nhân</small><b>bao2006@gmail.com</b></a><a href="tel:0946320928"><span><Icon name="phone" /></span><small>Điện thoại & Zalo</small><b>0946320928</b></a><div><span><Icon name="pin" /></span><small>Khu vực</small><b>phường Trường Vinh - Nghệ An</b></div></div></div>
-          <form className="contact-form card" onSubmit={submitContact}><h3><Icon name="contact" /> Gửi thông điệp trực tuyến</h3><p>Điền thông tin bên dưới để trao đổi nhanh với tôi.</p><label>Họ và tên *<input required placeholder="Nhập họ và tên..." /></label><label>Địa chỉ Email *<input required type="email" placeholder="example@domain.com" /></label><label>Chủ đề<select defaultValue="Cơ hội việc làm / Thực tập"><option>Cơ hội việc làm / Thực tập</option><option>Hợp tác dự án</option><option>Trao đổi chuyên môn</option></select></label><label>Nội dung tin nhắn *<textarea required placeholder="Nội dung lời nhắn..." /></label><button className="button primary full" type="submit">{sent ? 'Đã nhận thông tin của bạn' : 'Gửi tin nhắn ngay'} <Icon name="arrow" size={17} /></button></form>
+          <form className="contact-form card" onSubmit={submitContact}><h3><Icon name="contact" /> Gửi thông điệp trực tuyến</h3><p>Biểu mẫu sẽ mở ứng dụng email mặc định để bạn gửi tin nhắn.</p><label>Họ và tên *<input name="name" required placeholder="Nhập họ và tên..." /></label><label>Địa chỉ Email *<input name="email" required type="email" placeholder="example@domain.com" /></label><label>Chủ đề<select name="subject" defaultValue="Cơ hội việc làm / Thực tập"><option>Cơ hội việc làm / Thực tập</option><option>Hợp tác dự án</option><option>Trao đổi chuyên môn</option></select></label><label>Nội dung tin nhắn *<textarea name="message" required placeholder="Nội dung lời nhắn..." /></label><button className="button primary full" type="submit">Mở ứng dụng email <Icon name="arrow" size={17} /></button></form>
         </section>
       </main>
 
