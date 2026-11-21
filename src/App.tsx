@@ -1,6 +1,7 @@
 import { FormEvent, ReactNode } from 'react'
 
-const A = `${import.meta.env.BASE_URL}assets`
+const imageUrl = (name: string) =>
+  `${import.meta.env.BASE_URL}assets/${name}?v=${import.meta.env.VITE_ASSET_VERSION || 'local'}`
 type IconName = 'home' | 'user' | 'skills' | 'projects' | 'education' | 'contact' | 'arrow' | 'code' | 'mail' | 'phone' | 'pin' | 'github' | 'linkedin' | 'facebook' | 'download'
 
 function Icon({ name, size = 20 }: { name: IconName; size?: number }) {
@@ -40,9 +41,9 @@ const skills = [
 ]
 
 const projects = [
-  { image: `${A}/b5813.png`, eyebrow: 'Du lịch & Bản đồ số', title: 'Hạ Long Travel Guide', role: 'Frontend Developer & UI/UX Designer', copy: 'Cổng thông tin du lịch di sản với bản đồ địa điểm, tour, khách sạn và ẩm thực.', contribution: 'Thiết kế giao diện, tối ưu tương tác bản đồ và tích hợp API tìm kiếm.', tags: ['ReactJS', 'Tailwind CSS', 'Mapbox API', 'Node.js'] },
-  { image: `${A}/16c4b.png`, eyebrow: 'Web Identity', title: 'Modern Minimalist DevPortfolio', role: 'Creator', copy: 'Hồ sơ năng lực cá nhân tương tác cao, tối ưu SEO và thiết bị di động.', contribution: 'Wireframe, interactive prototype và triển khai Frontend thuần.', tags: ['HTML5', 'CSS3', 'JavaScript', 'Figma'] },
-  { image: `${A}/c36da.png`, eyebrow: 'Hệ thống & Quản trị', title: 'StudentHub', role: 'Backend Developer', copy: 'Quản lý sinh viên, điểm môn học, lịch thi, xếp loại và báo cáo.', contribution: 'Thiết kế cơ sở dữ liệu quan hệ, CRUD và phân quyền hệ thống.', tags: ['Java', 'Spring Boot', 'MySQL', 'Hibernate'] },
+  { image: imageUrl('b5813.png'), eyebrow: 'Du lịch & Bản đồ số', title: 'Hạ Long Travel Guide', role: 'Frontend Developer & UI/UX Designer', copy: 'Cổng thông tin du lịch di sản với bản đồ địa điểm, tour, khách sạn và ẩm thực.', contribution: 'Thiết kế giao diện, tối ưu tương tác bản đồ và tích hợp API tìm kiếm.', tags: ['ReactJS', 'Tailwind CSS', 'Mapbox API', 'Node.js'] },
+  { image: imageUrl('16c4b.png'), eyebrow: 'Web Identity', title: 'Modern Minimalist DevPortfolio', role: 'Creator', copy: 'Hồ sơ năng lực cá nhân tương tác cao, tối ưu SEO và thiết bị di động.', contribution: 'Wireframe, interactive prototype và triển khai Frontend thuần.', tags: ['HTML5', 'CSS3', 'JavaScript', 'Figma'] },
+  { image: imageUrl('c36da.png'), eyebrow: 'Hệ thống & Quản trị', title: 'StudentHub', role: 'Backend Developer', copy: 'Quản lý sinh viên, điểm môn học, lịch thi, xếp loại và báo cáo.', contribution: 'Thiết kế cơ sở dữ liệu quan hệ, CRUD và phân quyền hệ thống.', tags: ['Java', 'Spring Boot', 'MySQL', 'Hibernate'] },
 ]
 
 function SectionHeading({ kicker, title, description }: { kicker: string; title: string; description: string }) {
@@ -67,7 +68,7 @@ function App() {
   return (
     <div className="site-shell">
       <header className="topbar">
-        <a className="brand" href="#home"><img src={`${A}/1f92d.png`} alt="" /><span><strong>Nguyễn Sỹ Bảo</strong><small>IT PORTFOLIO</small></span></a>
+        <a className="brand" href="#home"><img src={imageUrl('1f92d.png')} alt="" /><span><strong>Nguyễn Sỹ Bảo</strong><small>IT PORTFOLIO</small></span></a>
         <nav className="desktop-nav" aria-label="Điều hướng chính">{navItems.map(item => <a href={`#${item.id}`} key={item.id}>{item.label}</a>)}</nav>
         <a className="top-contact" href="#contact">Liên hệ ngay <Icon name="arrow" size={16} /></a>
       </header>
@@ -82,14 +83,14 @@ function App() {
             <div className="hero-actions"><a className="button primary" href="#projects">Khám phá dự án <Icon name="arrow" size={18} /></a><a className="button secondary" href="#contact"><Icon name="contact" size={18} /> Liên hệ với tôi</a></div>
             <div className="tech-row">{['Java', 'Python', 'React', 'Tailwind CSS', 'Spring Boot', 'Figma'].map((tag, i) => <span key={tag}><i style={{ background: ['#ef4444', '#eab308', '#2563eb', '#06b6d4', '#10b981', '#a855f7'][i] }} />{tag}</span>)}</div>
           </div>
-          <div className="portrait-wrap"><div className="portrait-tag"><Icon name="code" size={16} /> Software Engineer in training</div><img src={`${A}/5455c.png`} alt="Chân dung Nguyễn Sỹ Bảo" /><div className="floating-code"><b>&lt;developer&gt;</b><span>build · learn · create</span></div></div>
+          <div className="portrait-wrap"><div className="portrait-tag"><Icon name="code" size={16} /> Software Engineer in training</div><img src={imageUrl('5455c.png')} alt="Chân dung Nguyễn Sỹ Bảo" /><div className="floating-code"><b>&lt;developer&gt;</b><span>build · learn · create</span></div></div>
           <div className="stats">{[['10+', 'Dự án & bài tập lớn'], ['2.5/4.0', 'Điểm GPA tích lũy'], ['3+', 'Giải thưởng & Certs'], ['100%', 'Nhiệt huyết & cam kết']].map(([value, label]) => <div className="stat" key={label}><strong>{value}</strong><span>{label}</span></div>)}</div>
         </section>
 
         <section className="section about" id="about">
           <SectionHeading kicker="Về bản thân tôi" title="Một lập trình viên trẻ, tư duy sản phẩm" description="Câu chuyện đằng sau những sản phẩm và hành trình tôi đang theo đuổi." />
           <div className="about-grid">
-            <div className="profile-card card"><div className="profile-head"><img src={`${A}/5455c.png`} alt="Nguyễn Sỹ Bảo" /><div><h3>Nguyễn Sỹ Bảo</h3><span>2004 · 22 tuổi</span><p>Công nghệ thông tin · Nghệ An, Việt Nam</p></div></div><div className="profile-meta"><span>Trường ĐH Vinh</span><span>Sinh viên</span></div><a className="button primary full" href="mailto:bao2006@gmail.com"><Icon name="mail" size={17} /> Liên hệ qua email</a></div>
+            <div className="profile-card card"><div className="profile-head"><img src={imageUrl('5455c.png')} alt="Nguyễn Sỹ Bảo" /><div><h3>Nguyễn Sỹ Bảo</h3><span>2004 · 22 tuổi</span><p>Công nghệ thông tin · Nghệ An, Việt Nam</p></div></div><div className="profile-meta"><span>Trường ĐH Vinh</span><span>Sinh viên</span></div><a className="button primary full" href="mailto:bao2006@gmail.com"><Icon name="mail" size={17} /> Liên hệ qua email</a></div>
             <article className="story card"><h3>Giới thiệu về bản thân</h3><p>Có duyên với ngành công nghệ từ những dòng mã Pascal và C++. Những khoảnh khắc dòng code chạy được đã tạo nên niềm đam mê lập trình của mình.</p><p>Ở đại học, ngọn lửa ấy trở thành say mê tạo ra các sản phẩm web và ứng dụng có giá trị thực tiễn. Mình luôn tin rằng một ứng dụng tốt giải quyết đúng vấn đề của người dùng.</p></article>
             <div className="principles card"><h3>Điểm mạnh nổi bật</h3><div><b>Tự học & nghiên cứu tài liệu</b><p>Chủ động cập nhật công nghệ mới.</p></div><div><b>Tư duy logic & thuật toán</b><p>Nền tảng phát triển phần mềm vững chắc.</p></div><div><b>UX/UI & Clean Code</b><p>Tối ưu trải nghiệm và mã nguồn rõ ràng.</p></div></div>
             <div className="goals card"><h3>Mục tiêu nghề nghiệp</h3><div className="timeline-mini"><span>Ngắn hạn</span><b>Software Engineer Intern</b><p>Trở thành kỹ sư phần mềm có tư duy hệ thống.</p></div><div className="timeline-mini"><span>Dài hạn</span><b>Technical Lead</b><p>Dẫn dắt đội kỹ thuật và xây dựng sản phẩm bền vững.</p></div></div>
@@ -109,7 +110,7 @@ function App() {
 
         <section className="section education-section" id="education">
           <SectionHeading kicker="Academic Journey" title="Học vấn & quá trình đào tạo" description="Nền tảng kiến thức học thuật tại trường đại học." />
-          <div className="education-hero card"><img src={`${A}/23f3c.png`} alt="Trường Đại học Vinh" /><div><span>VINH UNIVERSITY</span><h3>Trường Đại học Vinh</h3><b>Công nghệ thông tin</b><p>Chuyên sâu Kỹ thuật phần mềm</p></div><div className="gpa"><small>Điểm GPA tích lũy</small><strong>2.5<em>/4.0</em></strong><span>Xếp loại: Khá</span></div></div>
+          <div className="education-hero card"><img src={imageUrl('23f3c.png')} alt="Trường Đại học Vinh" /><div><span>VINH UNIVERSITY</span><h3>Trường Đại học Vinh</h3><b>Công nghệ thông tin</b><p>Chuyên sâu Kỹ thuật phần mềm</p></div><div className="gpa"><small>Điểm GPA tích lũy</small><strong>2.5<em>/4.0</em></strong><span>Xếp loại: Khá</span></div></div>
           <div className="education-body"><div><h3 className="subheading">Môn học tiêu biểu</h3><div className="subject-tags">{['Cấu trúc dữ liệu & Giải thuật', 'Cơ sở dữ liệu', 'Lập trình web', 'Xác suất thống kê', 'Chính trị'].map(subject => <span key={subject}>{subject}</span>)}</div></div><div><h3 className="subheading">Lộ trình học tập</h3><div className="education-timeline">{[['Năm 1 · 2021—2022', 'Nền tảng toán & lập trình'], ['Năm 2 · 2022—2023', 'Cấu trúc dữ liệu & OOP'], ['Năm 3 · 2023—2024', 'Phát triển phần mềm thực chiến'], ['Năm 4 · 2024—2025', 'Thực tập & khóa luận tốt nghiệp']].map(([year, title], i) => <article className={i === 3 ? 'current' : ''} key={year}><span>{year}</span><h4>{title}</h4></article>)}</div></div></div>
         </section>
 
@@ -119,7 +120,7 @@ function App() {
         </section>
       </main>
 
-      <footer><div className="brand"><img src={`${A}/1f92d.png`} alt="" /><span><strong>Nguyễn Sỹ Bảo</strong><small>IT PORTFOLIO</small></span></div><p>Thiết kế và phát triển với niềm đam mê công nghệ.</p><span>© 2025 Nguyễn Sỹ Bảo</span></footer>
+      <footer><div className="brand"><img src={imageUrl('1f92d.png')} alt="" /><span><strong>Nguyễn Sỹ Bảo</strong><small>IT PORTFOLIO</small></span></div><p>Thiết kế và phát triển với niềm đam mê công nghệ.</p><span>© 2025 Nguyễn Sỹ Bảo</span></footer>
       <nav className="mobile-nav" aria-label="Điều hướng trên thiết bị di động">{navItems.map(item => <a href={`#${item.id}`} key={item.id}><Icon name={item.icon} size={17} /><span>{item.label}</span></a>)}</nav>
     </div>
   )
