@@ -20,6 +20,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Verify portfolio images
+        run: |
+          for image in 1f92d.png 5455c.png b5813.png 16c4b.png c36da.png 23f3c.png; do
+            path="public/assets/$image"
+            if grep -aFq 'version https://git-lfs.github.com/spec/v1' "$path"; then
+              echo "::error::$path is an unresolved Git LFS pointer"
+              exit 1
+            fi
+          done
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
